@@ -1,0 +1,66 @@
+{% extends "frontend/base.html" %}
+{% block main %}
+  
+    <h1>Usuarios</h1>
+
+
+    <form method="POST" action="{% url 'crear_estudiante' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="label-small" for="numero_de_lista">Número de lista</label>
+          <input type="number" class="form-control" id="numero_de_lista" name="numero_de_lista" required>
+        </div>
+        <div class="form-group">
+          <label class="label-small" for="grupo">Grupo</label>
+          <input type="text" class="form-control" id="grupo" name="grupo" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Crear</button>
+      </form>
+
+    <br>
+
+<!--Tabla-->
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-header">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase" style="width: 100%">Fecha</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Número de lista</th>
+                                <th>grupo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in groupList %}
+                            <tr>
+                                <td>{{ item.numero_de_lista }}</td>
+                                <td>{{ item.grupo }}</td>
+                                <td>
+                                    <form action="{% url 'delete_student' item.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
